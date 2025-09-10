@@ -98,13 +98,12 @@
     function verificarRespuesta(indice) {
       const pregunta = preguntas[indicePregunta];
       if (indice === pregunta.correcta) {
-        
+          confetti(10);
+
         indicePregunta++;
         if (indicePregunta < preguntas.length) {
-            confetti(10);
           mostrarPregunta();
         } else {
-            confetti(10);
           indicePregunta = 0;
           mostrarPregunta();
         }
@@ -117,4 +116,5 @@
   </script>
 </body>
 </html>
+
 
