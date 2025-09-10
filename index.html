@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz de Señales</title>
+  
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #3f465e;
+      font-family: Arial, sans-serif;
+    }
+
+    .centro {
+      text-align: center;
+      background: #3f465e;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(15, 15, 15, 0.623);
+    }
+
+    #imagen {
+      width: 250px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .Opciones {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background: #e4e8eb;
+      color: rgb(0, 0, 0);
+      cursor: pointer;
+      transition: 0.3s;
+      width: 250px;
+      box-shadow: 0 4px 15px rgba(15, 15, 15, 0.623);
+
+
+    }
+
+    .Opciones:hover {
+      background: #3f465e;
+
+    }
+  </style>
+</head>
+<body>
+  <div class="centro">
+    <img id="imagen" src="" alt="Imagen de señal">
+    <div id="opciones"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script>
+    const pos = document.getElementById("positivo")
+
+    const preguntas = [
+      {
+        imagen: "transito/finaliza-el-libre-estacionamiento-por-pandemia.jpg",
+        opciones: ["Prohibido estacionar", "Fin de estacionamiento libre", "Estacionamiento permitido", "Sólo carga y descarga"],
+        correcta: 0
+      },
+      {
+        imagen: "transito/will-porada-ZaGcU6BxJEc-unsplash.jpg",
+        opciones: ["Curva peligrosa", "Peatones", "Velocidad máxima", "Contramano"],
+        correcta: 1
+      }
+    ];
+
+    let indicePregunta = 0;
+
+    function mostrarPregunta() {
+      const pregunta = preguntas[indicePregunta];
+      const img = document.getElementById("imagen");
+      const contenedorOpciones = document.getElementById("opciones");
+
+      img.src = pregunta.imagen;
+      contenedorOpciones.innerHTML = "";
+
+      pregunta.opciones.forEach((texto, i) => {
+        const boton = document.createElement("button");
+        boton.className = "Opciones";
+        boton.textContent = texto;
+        boton.onclick = () => verificarRespuesta(i);
+        contenedorOpciones.appendChild(boton);
+      });
+    }
+
+    function verificarRespuesta(indice) {
+      const pregunta = preguntas[indicePregunta];
+      if (indice === pregunta.correcta) {
+        
+        indicePregunta++;
+        if (indicePregunta < preguntas.length) {
+            confetti(10);
+          mostrarPregunta();
+        } else {
+
+          indicePregunta = 0;
+          mostrarPregunta();
+        }
+      } else {
+        alert("❌ Incorrecto, intenta de nuevo.");
+      }
+    }
+
+    mostrarPregunta();
+  </script>
+</body>
+</html>
